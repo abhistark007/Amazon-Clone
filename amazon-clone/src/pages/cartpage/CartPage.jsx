@@ -61,8 +61,8 @@ export default function CartPage() {
     const { error } = await stripe.redirectToCheckout({
       lineItems: [
         {
-          // price: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID,
-          price: 'price_1PPRdgDgwSN5FK8e6MjgwJYK',
+          price: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID,
+          
           quantity: 1,
           
         },
