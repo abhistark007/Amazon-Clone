@@ -9,6 +9,7 @@ import SubHeader from './components/SubHeader';
 import { Toaster } from 'react-hot-toast';
 import Success from './pages/successpage/Success';
 import Fail from './pages/failpage/Fail';
+import OrderHistoryPage from './pages/orderpage/OrderHistoryPage';
 
 function App() {
   
@@ -24,6 +25,7 @@ function App() {
         <Route path='/payment' element={<PaymentPage/>}/>
         <Route path='/success' element={<Success/>}/>
         <Route path='/cancel' element={<Fail/>}/>
+        <Route path='/orderhistory' element={<OrderHistoryPage/>}/>
       </Routes>
     </BrowserRouter>
   )

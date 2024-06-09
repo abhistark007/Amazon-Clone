@@ -40,10 +40,12 @@ export default function Navbar() {
                     <div className='font-bold'>Account & Lists</div>
                 </div>
 
+                <NavLink to={"/orderhistory"}>
                 <div className='flex flex-col text-white hover:underline cursor-pointer max-[830px]:hidden'>
                     <div>Returns</div>
                     <div className='font-bold'>& Orders</div>
                 </div>
+                </NavLink>
 
                 <NavLink to={"/cart"} className='max-[400px]:hidden'>
                 <div 

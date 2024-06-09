@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import skyfallAd from '../../assets/sad.jpg';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CartItemCard from './CartItemCard';
+import { setOrderHistory } from '../../state/store';
 
 import getStripe from '../../lib/getStripe';
 
@@ -10,6 +11,8 @@ export default function CartPage() {
 
 
   const items = useSelector((state) => state.amazonReducer.productsInCart);
+  const myOrder=JSON.parse(localStorage.getItem('orderHistory'));
+  const dispatch= useDispatch();
 
   function getTotalCostPlusGST(){
     let cash=0;
@@ -29,7 +32,30 @@ export default function CartPage() {
 
   
 
-  async function handleCheckout() {
+  async function handleCheckout(e) {
+    // e.preventDefault();
+    // Added Order History
+    // console.log(items);
+    // items.push({paid:getTotalCostInteger()});
+    // console.log(items);
+
+    let temp=[{paid:getTotalCostInteger()},...items];
+    console.log(temp);
+
+    let myCart=[];
+    if(!myOrder){
+      myCart=[[...temp]];
+    }else{
+      
+      myCart=[...myOrder,[...temp]];
+    }
+    
+
+    // dispatch(setOrderHistory(myCart));
+    // console.log(myCart)
+    localStorage.setItem('orderHistory',JSON.stringify(myCart))
+
+
     const stripe = await getStripe();
 
     const { error } = await stripe.redirectToCheckout({
@@ -46,8 +72,14 @@ export default function CartPage() {
       successUrl: `http://localhost:5173/success`,
       cancelUrl: `http://localhost:5173/cancel`,
       customerEmail: 'customer@email.com',
-    });
-    console.warn(error.message);
+
+    }).then(result => {
+        if (result.error) {
+            alert(result.error.message);
+        }
+    })
+    
+    console.log(error.message);
   }
 
 
